@@ -1,0 +1,12 @@
+[package]
+name = "rust-layered-example"
+version = "0.1.0"
+authors = ["Pocket7878 <poketo7878@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+usecase = { path = "../usecase" }
+infra = { path = "../infra" }
+clap = "2.33.0"
+tokio = { version = "0.2", features = ["full"] }
+time = "0.3.11"
