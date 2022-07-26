@@ -17,7 +17,7 @@ impl CreateTaskUseCase {
         &self,
         task_name: &str,
         due_date: time::OffsetDateTime,
-    ) -> Result<TaskId, Box<dyn Error + Send + Sync + 'static>> {
+    ) -> Result<Task, Box<dyn Error + Send + Sync + 'static>> {
         tracing::debug!(
             "CreateTaskUseCase::execute name = {}, due_date = {}",
             task_name,
@@ -26,6 +26,6 @@ impl CreateTaskUseCase {
         let mut task = Task::new(TaskName::new(task_name), due_date);
         self.task_repository.insert(&mut task).await?;
 
-        task.id.ok_or("TaskId should be filled after insert".into())
+        Ok(task)
     }
 }

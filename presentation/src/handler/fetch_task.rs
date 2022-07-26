@@ -4,27 +4,21 @@ use axum::{extract::Path, http::StatusCode, Extension, Json};
 use axum_macros::debug_handler;
 use serde::{Deserialize, Serialize};
 
-use crate::api_error::{ApiError, ApiErrorType};
-
-#[derive(Serialize, Debug)]
-pub struct FetchTaskResponse {
-    id: i64,
-    name: String,
-    #[serde(with = "time::serde::rfc3339")]
-    due_date: time::OffsetDateTime,
-    postpone_count: i32,
-}
+use crate::{
+    api_error::{ApiError, ApiErrorType},
+    handler::task_detail_response::TaskDetailResponse,
+};
 
 #[debug_handler]
 pub async fn fetch_task(
     Path(task_id): Path<i64>,
     Extension(infra_provider): Extension<Arc<infra::Provider>>,
-) -> Result<Json<FetchTaskResponse>, ApiError> {
+) -> Result<Json<TaskDetailResponse>, ApiError> {
     let use_case =
         use_case::task::FetchTaskUseCase::new(Box::new(infra_provider.provide_task_repository()));
     match use_case.execute(&task_id).await {
         Ok(task) => match task {
-            Some(task) => Ok(Json(FetchTaskResponse {
+            Some(task) => Ok(Json(TaskDetailResponse {
                 id: task.id.unwrap(),
                 name: task.name.value,
                 due_date: task.due_date,

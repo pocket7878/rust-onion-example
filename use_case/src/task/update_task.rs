@@ -4,18 +4,6 @@ use domain::{
 };
 use std::{error::Error, fmt};
 
-#[derive(Debug, Clone)]
-pub struct TaskNotFoundError {
-    task_id: TaskId,
-}
-
-impl fmt::Display for TaskNotFoundError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "task not found: {}", self.task_id)
-    }
-}
-impl std::error::Error for TaskNotFoundError {}
-
 pub struct UpdateTaskUseCase {
     task_repository: Box<dyn TaskRepository + Send + Sync>,
 }
@@ -37,7 +25,7 @@ impl UpdateTaskUseCase {
 
             Ok(task)
         } else {
-            return Err(TaskNotFoundError { task_id: id }.into());
+            return Err(super::error::TaskNotFoundError { task_id: id }.into());
         }
     }
 }
