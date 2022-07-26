@@ -1,5 +1,5 @@
 use domain::{
-    model::task::{Task, TaskId, TaskName},
+    model::task::{Task, TaskName},
     repository::TaskRepository,
 };
 use std::error::Error;

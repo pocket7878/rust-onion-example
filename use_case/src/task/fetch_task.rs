@@ -1,7 +1,4 @@
-use domain::{
-    model::task::{Task, TaskId},
-    repository::TaskRepository,
-};
+use domain::{model::task::TaskId, repository::TaskRepository};
 use std::error::Error;
 
 use super::TaskDetailDto;
@@ -17,9 +14,9 @@ impl FetchTaskUseCase {
 
     pub async fn execute(
         &self,
-        id: &TaskId,
+        id: TaskId,
     ) -> Result<Option<TaskDetailDto>, Box<dyn Error + Send + Sync + 'static>> {
-        let task = self.task_repository.find_by_id(id).await?;
+        let task = self.task_repository.find_by_id(&id).await?;
 
         match task {
             Some(task) => Ok(Some(task.into())),

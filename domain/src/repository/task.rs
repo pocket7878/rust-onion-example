@@ -11,6 +11,7 @@ pub trait TaskRepository {
         &self,
         id: &TaskId,
     ) -> Result<Option<Task>, Box<dyn Error + Send + Sync + 'static>>;
+    async fn list(&self) -> Result<Vec<Task>, Box<dyn Error + Send + Sync + 'static>>;
     async fn insert(&self, task: &mut Task) -> Result<(), Box<dyn Error + Send + Sync + 'static>>;
     async fn update(&self, task: &Task) -> Result<(), Box<dyn Error + Send + Sync + 'static>>;
 }

@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use axum::{extract::Path, http::StatusCode, Extension, Json};
 use axum_macros::debug_handler;
-use serde::{Deserialize, Serialize};
+
 
 use crate::{
     api_error::{ApiError, ApiErrorType},
@@ -16,7 +16,7 @@ pub async fn fetch_task(
 ) -> Result<Json<TaskDetailResponse>, ApiError> {
     let use_case =
         use_case::task::FetchTaskUseCase::new(Box::new(infra_provider.provide_task_repository()));
-    match use_case.execute(&task_id).await {
+    match use_case.execute(task_id).await {
         Ok(task) => match task {
             Some(task) => Ok(Json(TaskDetailResponse {
                 id: task.id,

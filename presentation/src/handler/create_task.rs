@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use axum::{http::StatusCode, Extension, Json};
 use axum_macros::debug_handler;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize};
 
 use crate::{
     api_error::{ApiError, ApiErrorType},

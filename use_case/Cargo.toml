@@ -7,5 +7,6 @@ version = "0.1.0"
 
 [dependencies]
 domain = {path = "../domain"}
+thiserror = "1"
 time = "0.3.11"
 tracing = "0.1"

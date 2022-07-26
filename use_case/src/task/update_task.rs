@@ -1,8 +1,8 @@
 use domain::{
-    model::task::{Task, TaskId, TaskName},
+    model::task::{TaskId, TaskName},
     repository::TaskRepository,
 };
-use std::{error::Error, fmt};
+use std::error::Error;
 
 use super::TaskDetailDto;
 

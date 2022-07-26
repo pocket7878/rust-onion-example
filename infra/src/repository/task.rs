@@ -57,6 +57,40 @@ impl repository::TaskRepository for TaskRdbRepository {
         Ok(Some(task))
     }
 
+    async fn list(&self) -> Result<Vec<Task>, Box<dyn std::error::Error + Send + Sync + 'static>> {
+        let rows = sqlx::query(
+            "
+        SELECT
+            id
+            ,name
+            ,due_date
+            ,postpone_count
+        FROM tasks
+        ",
+        )
+        .fetch_all(&self.db_con)
+        .await?;
+
+        let mut result = vec![];
+        for row in rows {
+            let due_date_str: String = row.get("due_date");
+            let due_date = time::OffsetDateTime::parse(
+                &due_date_str,
+                &time::format_description::well_known::Rfc3339,
+            )
+            .map_err(|e| format!("{}", e))?;
+            let task = domain::model::task::Task::reconstruct(
+                row.get("id"),
+                TaskName::reconstruct(row.get("name")),
+                row.get("postpone_count"),
+                due_date,
+            );
+            result.push(task);
+        }
+
+        Ok(result)
+    }
+
     async fn insert(
         &self,
         task: &mut Task,

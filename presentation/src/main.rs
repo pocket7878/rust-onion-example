@@ -24,15 +24,20 @@ async fn main() {
 
     // build our application with a route
     let app = Router::new()
+        .route("/tasks", get(handler::list_tasks::list_tasks))
         .route("/tasks", post(handler::create_task::create_task))
         .route("/tasks/:id", get(handler::fetch_task::fetch_task))
         .route("/tasks/:id", patch(handler::update_task::update_task))
+        .route(
+            "/tasks/:id/postpone",
+            patch(handler::postpone_task::postpone_task),
+        )
         .layer(Extension(infra_provider));
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
     let port = std::env::var("PORT")
-        .unwrap_or("8080".to_string())
+        .unwrap_or_else(|_| "8080".to_string())
         .parse()
         .unwrap();
     let addr = SocketAddr::from(([127, 0, 0, 1], port));

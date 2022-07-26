@@ -251,6 +251,7 @@ name = "domain"
 version = "0.1.0"
 dependencies = [
  "async-trait",
+ "thiserror",
  "time",
 ]
 
@@ -1467,6 +1468,7 @@ name = "use_case"
 version = "0.1.0"
 dependencies = [
  "domain",
+ "thiserror",
  "time",
  "tracing",
 ]
