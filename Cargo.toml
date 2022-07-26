@@ -1,8 +1,8 @@
 [workspace]
 
 members = [
-    "presentation",
-    "infra",
-    "usecase",
-    "domain"
+  "presentation",
+  "infra",
+  "use_case",
+  "domain",
 ]

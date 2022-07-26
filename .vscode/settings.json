@@ -1,3 +1,7 @@
 {
-	"editor.formatOnType": true
+	"editor.formatOnSave": true,
+	"cSpell.words": [
+		"sqlx"
+	],
+	"editor.formatOnType": true,
 }

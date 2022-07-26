@@ -1,12 +1,18 @@
 [package]
-name = "rust-layered-example"
-version = "0.1.0"
 authors = ["Pocket7878 <poketo7878@gmail.com>"]
 edition = "2021"
+name = "rust-layered-example"
+version = "0.1.0"
 
 [dependencies]
-usecase = { path = "../usecase" }
-infra = { path = "../infra" }
+axum = "0.5.13"
+axum-macros = "0.2.3"
 clap = "2.33.0"
-tokio = { version = "0.2", features = ["full"] }
-time = "0.3.11"
+infra = {path = "../infra"}
+serde = {version = "1.0", features = ["derive"]}
+serde_json = "1.0.82"
+time = {version = "0.3.11", features = ["serde", "serde-well-known"]}
+tokio = {version = "1.0", features = ["full"]}
+tracing = "0.1"
+tracing-subscriber = {version = "0.3", features = ["env-filter"]}
+use_case = {path = "../use_case"}

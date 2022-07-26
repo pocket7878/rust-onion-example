@@ -1,47 +1,44 @@
-use time::{Date};
-use super::user::UserId;
+use time::OffsetDateTime;
 
-pub type TaskId = i32;
+pub type TaskId = i64;
 
 #[derive(Debug)]
 pub struct Task {
-    id: Option<TaskId>,
-    name: TaskName,
-    user_id: UserId,
-    postpone_count: i32,
-    due_date: Date,
+    pub id: Option<TaskId>,
+    pub name: TaskName,
+    pub postpone_count: i32,
+    pub due_date: OffsetDateTime,
 }
 
 impl Task {
-    pub fn new(name: TaskName, user_id: UserId, due_date: Date) -> Self {
+    pub fn new(name: TaskName, due_date: OffsetDateTime) -> Self {
         // TODO: Validate domain logic.
         Task {
             id: None,
             name,
-            user_id,
             postpone_count: 0,
-            due_date: due_date,
-        }
-    }
-
-    pub fn reconstruct(id: TaskId, name: TaskName, user_id: UserId, postpone_count: i32, due_date: Date) -> Self {
-        Task {
-            id: Some(id),
-            name,
-            user_id,
-            postpone_count,
             due_date,
         }
     }
 
-    pub fn get_id(&self) -> Option<TaskId> {
-        self.id
+    pub fn reconstruct(
+        id: TaskId,
+        name: TaskName,
+        postpone_count: i32,
+        due_date: OffsetDateTime,
+    ) -> Self {
+        Task {
+            id: Some(id),
+            name,
+            postpone_count,
+            due_date,
+        }
     }
 }
 
 #[derive(Debug)]
 pub struct TaskName {
-    value: String,
+    pub value: String,
 }
 
 impl TaskName {
