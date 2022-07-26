@@ -25,8 +25,8 @@ pub async fn update_task(
     let res = use_case.execute(task_id, &payload.name);
     match res.await {
         Ok(task) => Ok(Json(TaskDetailResponse {
-            id: task.id.unwrap(),
-            name: task.name.value,
+            id: task.id,
+            name: task.name,
             due_date: task.due_date,
             postpone_count: task.postpone_count,
         })),

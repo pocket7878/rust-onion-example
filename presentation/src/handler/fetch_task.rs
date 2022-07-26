@@ -19,8 +19,8 @@ pub async fn fetch_task(
     match use_case.execute(&task_id).await {
         Ok(task) => match task {
             Some(task) => Ok(Json(TaskDetailResponse {
-                id: task.id.unwrap(),
-                name: task.name.value,
+                id: task.id,
+                name: task.name,
                 due_date: task.due_date,
                 postpone_count: task.postpone_count,
             })),

@@ -4,6 +4,8 @@ use domain::{
 };
 use std::error::Error;
 
+use super::TaskDetailDto;
+
 pub struct CreateTaskUseCase {
     task_repository: Box<dyn TaskRepository + Send + Sync>,
 }
@@ -17,7 +19,7 @@ impl CreateTaskUseCase {
         &self,
         task_name: &str,
         due_date: time::OffsetDateTime,
-    ) -> Result<Task, Box<dyn Error + Send + Sync + 'static>> {
+    ) -> Result<TaskDetailDto, Box<dyn Error + Send + Sync + 'static>> {
         tracing::debug!(
             "CreateTaskUseCase::execute name = {}, due_date = {}",
             task_name,
@@ -26,6 +28,6 @@ impl CreateTaskUseCase {
         let mut task = Task::new(TaskName::new(task_name), due_date);
         self.task_repository.insert(&mut task).await?;
 
-        Ok(task)
+        Ok(task.into())
     }
 }

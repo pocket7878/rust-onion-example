@@ -4,6 +4,8 @@ use domain::{
 };
 use std::{error::Error, fmt};
 
+use super::TaskDetailDto;
+
 pub struct UpdateTaskUseCase {
     task_repository: Box<dyn TaskRepository + Send + Sync>,
 }
@@ -17,13 +19,13 @@ impl UpdateTaskUseCase {
         &self,
         id: TaskId,
         name: &str,
-    ) -> Result<Task, Box<dyn Error + Send + Sync + 'static>> {
+    ) -> Result<TaskDetailDto, Box<dyn Error + Send + Sync + 'static>> {
         let task = self.task_repository.find_by_id(&id).await?;
         if let Some(mut task) = task {
             task.name = TaskName::new(name);
             self.task_repository.update(&task).await?;
 
-            Ok(task)
+            Ok(task.into())
         } else {
             return Err(super::error::TaskNotFoundError { task_id: id }.into());
         }

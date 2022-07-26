@@ -26,8 +26,8 @@ pub async fn create_task(
     let res = use_case.execute(&payload.name, payload.due_date);
     match res.await {
         Ok(task) => Ok(Json(TaskDetailResponse {
-            id: task.id.unwrap(),
-            name: task.name.value,
+            id: task.id,
+            name: task.name,
             due_date: task.due_date,
             postpone_count: task.postpone_count,
         })),
