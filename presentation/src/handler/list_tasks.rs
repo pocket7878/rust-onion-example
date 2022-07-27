@@ -3,18 +3,17 @@ use std::sync::Arc;
 use axum::{http::StatusCode, Extension, Json};
 use axum_macros::debug_handler;
 
-
 use crate::{
     api_error::{ApiError, ApiErrorType},
+    di_container,
     handler::task_detail_response::TaskDetailResponse,
 };
 
 #[debug_handler]
 pub async fn list_tasks(
-    Extension(infra_provider): Extension<Arc<infra::Provider>>,
+    Extension(di_container): Extension<Arc<di_container::DiContainer>>,
 ) -> Result<Json<Vec<TaskDetailResponse>>, ApiError> {
-    let use_case =
-        use_case::task::ListTasksUseCase::new(Box::new(infra_provider.provide_task_repository()));
+    let use_case = di_container.list_tasks_use_case();
     match use_case.execute().await {
         Ok(tasks) => {
             let task_details = tasks

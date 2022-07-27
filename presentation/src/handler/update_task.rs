@@ -2,10 +2,11 @@ use std::sync::Arc;
 
 use axum::{extract::Path, http::StatusCode, Extension, Json};
 use axum_macros::debug_handler;
-use serde::{Deserialize};
+use serde::Deserialize;
 
 use crate::{
     api_error::{ApiError, ApiErrorType},
+    di_container,
     handler::task_detail_response::TaskDetailResponse,
 };
 
@@ -18,10 +19,9 @@ pub struct UpdateTaskParams {
 pub async fn update_task(
     Path(task_id): Path<i64>,
     Json(payload): Json<UpdateTaskParams>,
-    Extension(infra_provider): Extension<Arc<infra::Provider>>,
+    Extension(di_container): Extension<Arc<di_container::DiContainer>>,
 ) -> Result<Json<TaskDetailResponse>, ApiError> {
-    let use_case =
-        use_case::task::UpdateTaskUseCase::new(Box::new(infra_provider.provide_task_repository()));
+    let use_case = di_container.update_task_use_case();
     let res = use_case.execute(task_id, &payload.name);
     match res.await {
         Ok(task) => Ok(Json(TaskDetailResponse {

@@ -1,4 +1,5 @@
 mod api_error;
+mod di_container;
 mod handler;
 
 use axum::{
@@ -16,11 +17,10 @@ async fn main() {
         .init();
 
     // initialize infra provider
-    let infra_provider = Arc::new(
-        infra::Provider::new()
-            .await
-            .expect("Failed to initialize infra provider"),
-    );
+    let infra_provider = infra::Provider::new()
+        .await
+        .expect("Failed to initialize infra provider");
+    let di_container = Arc::new(di_container::DiContainer::new(infra_provider));
 
     // build our application with a route
     let app = Router::new()
@@ -32,7 +32,7 @@ async fn main() {
             "/tasks/:id/postpone",
             patch(handler::postpone_task::postpone_task),
         )
-        .layer(Extension(infra_provider));
+        .layer(Extension(di_container));
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
