@@ -10,6 +10,7 @@ Separate each layer into crates:
 - infra
 - use_case
 - presentation
+- di
 
 ### Domain
 
@@ -30,6 +31,10 @@ Separate each layer into crates:
 
 - Convert request from out-side world into use_case parameter.
 - Convert use-case response into out-side world format.
+
+### DI
+
+- Hide use_case build logic into DiContainer
 
 ## Running
 

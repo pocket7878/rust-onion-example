@@ -5,4 +5,5 @@ members = [
   "infra",
   "use_case",
   "domain",
+  "di",
 ]

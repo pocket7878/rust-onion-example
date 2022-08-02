@@ -5,13 +5,12 @@ use axum_macros::debug_handler;
 
 use crate::{
     api_error::{ApiError, ApiErrorType},
-    di_container,
     handler::task_detail_response::TaskDetailResponse,
 };
 
 #[debug_handler]
 pub async fn list_tasks(
-    Extension(di_container): Extension<Arc<di_container::DiContainer>>,
+    Extension(di_container): Extension<Arc<di::DiContainer>>,
 ) -> Result<Json<Vec<TaskDetailResponse>>, ApiError> {
     let use_case = di_container.list_tasks_use_case();
     match use_case.execute().await {

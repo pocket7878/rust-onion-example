@@ -6,7 +6,6 @@ use serde::Deserialize;
 
 use crate::{
     api_error::{ApiError, ApiErrorType},
-    di_container,
     handler::task_detail_response::TaskDetailResponse,
 };
 
@@ -19,7 +18,7 @@ pub struct UpdateTaskParams {
 pub async fn update_task(
     Path(task_id): Path<i64>,
     Json(payload): Json<UpdateTaskParams>,
-    Extension(di_container): Extension<Arc<di_container::DiContainer>>,
+    Extension(di_container): Extension<Arc<di::DiContainer>>,
 ) -> Result<Json<TaskDetailResponse>, ApiError> {
     let use_case = di_container.update_task_use_case();
     let res = use_case.execute(task_id, &payload.name);

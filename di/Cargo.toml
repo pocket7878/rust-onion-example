@@ -1,0 +1,11 @@
+[package]
+edition = "2021"
+name = "di"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+infra = {path = "../infra"}
+tracing = "0.1"
+use_case = {path = "../use_case"}

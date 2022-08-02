@@ -5,14 +5,13 @@ use axum_macros::debug_handler;
 
 use crate::{
     api_error::{ApiError, ApiErrorType},
-    di_container,
     handler::task_detail_response::TaskDetailResponse,
 };
 
 #[debug_handler]
 pub async fn fetch_task(
     Path(task_id): Path<i64>,
-    Extension(di_container): Extension<Arc<di_container::DiContainer>>,
+    Extension(di_container): Extension<Arc<di::DiContainer>>,
 ) -> Result<Json<TaskDetailResponse>, ApiError> {
     let use_case = di_container.fetch_task_use_case();
     match use_case.execute(task_id).await {

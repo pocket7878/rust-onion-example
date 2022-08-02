@@ -237,6 +237,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "di"
+version = "0.1.0"
+dependencies = [
+ "infra",
+ "tracing",
+ "use_case",
+]
+
+[[package]]
 name = "digest"
 version = "0.10.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -863,7 +872,7 @@ dependencies = [
  "axum",
  "axum-macros",
  "clap",
- "infra",
+ "di",
  "serde",
  "serde_json",
  "time",

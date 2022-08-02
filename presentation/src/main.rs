@@ -1,5 +1,4 @@
 mod api_error;
-mod di_container;
 mod handler;
 
 use axum::{
@@ -17,10 +16,7 @@ async fn main() {
         .init();
 
     // initialize infra provider
-    let infra_provider = infra::Provider::new()
-        .await
-        .expect("Failed to initialize infra provider");
-    let di_container = Arc::new(di_container::DiContainer::new(infra_provider));
+    let di_container = Arc::new(di::DiContainer::new().await);
 
     // build our application with a route
     let app = Router::new()

@@ -6,7 +6,6 @@ use serde::Deserialize;
 
 use crate::{
     api_error::{ApiError, ApiErrorType},
-    di_container,
     handler::task_detail_response::TaskDetailResponse,
 };
 
@@ -20,7 +19,7 @@ pub struct CreateTaskParams {
 #[debug_handler]
 pub async fn create_task(
     Json(payload): Json<CreateTaskParams>,
-    Extension(di_container): Extension<Arc<di_container::DiContainer>>,
+    Extension(di_container): Extension<Arc<di::DiContainer>>,
 ) -> Result<Json<TaskDetailResponse>, ApiError> {
     let use_case = di_container.create_task_use_case();
     let res = use_case.execute(&payload.name, payload.due_date);
