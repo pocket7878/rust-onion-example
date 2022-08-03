@@ -1,4 +1,4 @@
-# rust-layered-example
+# rust-onion-example
 
 Rust onion architecture application example.
 
