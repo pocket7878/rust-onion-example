@@ -5,8 +5,8 @@ name = "rust-layered-example"
 version = "0.1.0"
 
 [dependencies]
-axum = "0.5.13"
-axum-macros = "0.2.3"
+axum = "0.6.18"
+axum-macros = "0.3.7"
 clap = "2.33.0"
 di = {path = "../di"}
 serde = {version = "1.0", features = ["derive"]}

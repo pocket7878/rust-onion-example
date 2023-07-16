@@ -18,8 +18,8 @@ pub struct CreateTaskParams {
 
 #[debug_handler]
 pub async fn create_task(
-    Json(payload): Json<CreateTaskParams>,
     Extension(di_container): Extension<Arc<di::DiContainer>>,
+    Json(payload): Json<CreateTaskParams>,
 ) -> Result<Json<TaskDetailResponse>, ApiError> {
     let use_case = di_container.create_task_use_case();
     let res = use_case.execute(&payload.name, payload.due_date);

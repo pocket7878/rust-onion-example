@@ -17,8 +17,8 @@ pub struct UpdateTaskParams {
 #[debug_handler]
 pub async fn update_task(
     Path(task_id): Path<i64>,
-    Json(payload): Json<UpdateTaskParams>,
     Extension(di_container): Extension<Arc<di::DiContainer>>,
+    Json(payload): Json<UpdateTaskParams>,
 ) -> Result<Json<TaskDetailResponse>, ApiError> {
     let use_case = di_container.update_task_use_case();
     let res = use_case.execute(task_id, &payload.name);
